@@ -1,21 +1,28 @@
 // src/app/App.tsx
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
-import DashboardPage from "../pages/DashboardPage";
-import UsersPage from "../pages/UsersPage";
+import DemoPage from "../pages/DemoPage";
+import PublicLogPage from "../pages/PublicLogPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import Header from "../components/layout/Header";
+import { DecisionsProvider } from "../context/DecisionsContext";
+import ErrorBoundary from "../components/common/ErrorBoundary";
 
 export default function App() {
   return (
-    <>
-      <Header />
+    <ErrorBoundary>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/users" element={<UsersPage />} />
+        <Route
+          path="/demo"
+          element={
+            <DecisionsProvider>
+              <DemoPage />
+            </DecisionsProvider>
+          }
+        />
+        <Route path="/public" element={<PublicLogPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </>
+    </ErrorBoundary>
   );
 }
